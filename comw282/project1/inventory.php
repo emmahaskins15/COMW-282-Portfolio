@@ -3,12 +3,8 @@
 **Intermediary PHP file-->
 <?php
 include 'functions.php';
-
-session_start();
-$_SESSION["inventory"] = $inventory;
-// printDebug($inventory);
-  
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,8 +36,8 @@ $_SESSION["inventory"] = $inventory;
         </thead>
         <tbody>
             <?php
-            echo $selection.' Phones';
-            printInventoryAsTableRows($inventory);
+            echo $manufacturer.' Phones';
+            printInventoryAsTableRows($filteredInventory);
             ?>
         </tbody>
     </table>
