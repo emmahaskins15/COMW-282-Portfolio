@@ -32,7 +32,7 @@ function printInventoryAsTableRows($parsedArray) {
         echo '<td>'.$v[1].'</td>';
         echo '<td>'.$v[0].'</td>';
         echo '<td>$'.sprintf("%.2f", $v[2]).'</td>';
-        echo '<td><input type="radio" name="productID" id="'.$k.'" value="'.$k.'"></td>';
+        echo '<td><input type="radio" required="required" name="productID" id="'.$k.'" value="'.$k.'"></td>';
         echo '</tr>';
     }
 }

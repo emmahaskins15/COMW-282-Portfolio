@@ -12,7 +12,7 @@ body {
     flex-direction: column;
 	margin-right: auto;
 	margin-left: auto;
-    padding: 12rem;
+    width: 33%;
 }
 
 .subnav {
@@ -79,6 +79,8 @@ td {
 }
 
 img {
+    align-self: center;
+    width: 40%;
     border-radius: 6px;
     border: 1px solid rgb(216, 216, 216);
     transition: transform 150ms ease-out;
@@ -95,9 +97,10 @@ button {
     background-color: #0046be;
     color: white;
     transition: transform 150ms ease-out;
-    align-content: center;
+    align-self: center;
     display: inline-block;
     margin: 2px;
+    width: 33%;
 }
 
 button:hover {
