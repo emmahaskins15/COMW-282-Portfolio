@@ -1,6 +1,3 @@
-<!-- TO DO -->
-<!-- Dynamic title gets from radio ID -->
-<!--  -->
 <?php
 include 'functions.php';
 ?>
@@ -16,10 +13,12 @@ include 'functions.php';
         ?>
     </title>
     <meta charset="utf-8">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
 </head>
-<body bgcolor=e6e8fa>
-    <img src="img/product-image-placeholder.jpg" height="64" width="64">
-    <div id="phone-details">
+<body>
+    <div class="container">
+        <a href="inventory.php">Return to Inventory</a>
+        <img src="img/product-image-placeholder.jpg">
         <table>
             <tr>
                 <?php
@@ -29,8 +28,7 @@ include 'functions.php';
                 ?>
             </tr>
         </table>
-
+        <button>Add to Cart</button>
     </div>
-    <a href="inventory.php">Return to Inventory</a>
 </body>
 </html>

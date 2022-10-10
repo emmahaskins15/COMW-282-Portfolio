@@ -26,17 +26,13 @@ function filterInventory($inventory, $manufacturer) {
     return $filteredInventory;
 }
 
-
-
-
-
 function printInventoryAsTableRows($parsedArray) {
     foreach ($parsedArray as $k => $v) {
         echo '<tr>';
-        echo '<td><input type="radio" name="productID" id="'.$k.'" value="'.$k.'"></td>';
         echo '<td>'.$v[1].'</td>';
         echo '<td>'.$v[0].'</td>';
-        echo '<td style="text-align:right">$'.sprintf("%.2f", $v[2]).'</td>';
+        echo '<td>$'.sprintf("%.2f", $v[2]).'</td>';
+        echo '<td><input type="radio" name="productID" id="'.$k.'" value="'.$k.'"></td>';
         echo '</tr>';
     }
 }
@@ -59,6 +55,4 @@ $filteredInventory = filterInventory($inventory, $manufacturer);
 $productID = $_POST['productID'] ?? 1;
 $productAsArray = $filteredInventory[$productID];
 $productAsClass = new Product($productID, $productAsArray);
-
-
 ?>
