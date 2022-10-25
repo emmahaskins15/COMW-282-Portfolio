@@ -11,14 +11,7 @@ try {
         $sth = $dbh->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
         $sth->execute(['groupID' => $groupID]);
         $result = $sth->fetchAll();
-        // $count = sizeof($result); Good solution that doesn't require another query :upside-down face:
-
-        // Bad solution to meet rubric: retrieve COUNT of records from records with matching $groupID
-        $query = 'SELECT COUNT(*) FROM test_scores WHERE group_id = :groupID';
-        $sth = $dbh->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-        $sth->execute(['groupID' => $groupID]);
-        $count = $sth->fetchAll();
-        $count = $count[0]['COUNT(*)'];
+        $count = sizeof($result);
 
         $tableHeader = "Displaying Records for Group ".$groupID;
     }
@@ -27,14 +20,7 @@ try {
         $sth = $dbh->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
         $sth->execute();
         $result = $sth->FetchAll();
-        // $count = sizeof($result); Good solution that doesn't require another query :upside-down face:
-
-        // Bad solution to meet rubric: retrieve COUNT of records from records with matching $groupID
-        $query = 'SELECT COUNT(*) FROM test_scores';
-        $sth = $dbh->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-        $sth->execute();
-        $count = $sth->fetchAll();
-        $count = $count[0]['COUNT(*)'];
+        $count = sizeof($result);
 
         $tableHeader = "Displaying Records for All Groups";
     }
