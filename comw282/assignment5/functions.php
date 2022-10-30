@@ -1,12 +1,9 @@
 <?php
-
 function validateInteger($int) {
     if (filter_var($int, FILTER_VALIDATE_INT, array('options' => array('min_range' => 0, 'max_range' => 100))) === false) {
-        $e = 'Invalid input';
         return false;
     }
     else if (!ctype_digit($int)) {
-        $e = 'Invalid input';
         return false;
     }
     else {
@@ -19,7 +16,7 @@ function sanitizeInteger($int) {
     return $int;
 }
 
-function validateGroupID($groupID) {
+function isGroupIDValid($groupID) {
     $pattern = '/[ABCDE]/';
     if (preg_match($pattern, $groupID)) {
         return true;
@@ -41,8 +38,6 @@ function createRecord($scoreArray) {
         $sth->bindParam(3, $scoreArray[2], PDO::PARAM_INT);
         $sth->bindParam(4, $scoreArray[3], PDO::PARAM_INT);
         $sth->execute([$scoreArray[0], $scoreArray[1], $scoreArray[2], $scoreArray[3]]);
-        $e = '`INSERT` success';
-
     }
     catch (PDOException $e) {
         throw new PDOException($e->getMessage(), (int)$e->getCode());
@@ -65,24 +60,29 @@ function printDebug($arg) {
     echo '</pre>';
 }
 
-$e = '';
+function insert(){
+    if (isset($_POST['math']) && isset($_POST['reading']) && isset($_POST['writing']) && isset($_POST['groupID']) && isGroupIDValid($_POST['groupID'])) { 
+        $mathScore = sanitizeInteger($_POST['math']);
+        $readingScore = sanitizeInteger($_POST['reading']);
+        $writingScore = sanitizeInteger($_POST['writing']);
+        $groupID = $_POST['groupID'];
+        $scoreArray = [$groupID, $mathScore, $readingScore, $writingScore];
 
-if (isset($_POST['math']) && isset($_POST['reading']) && isset($_POST['writing']) && isset($_POST['groupID']) && validateGroupID($_POST['groupID'])) { 
-    $mathScore = sanitizeInteger($_POST['math']);
-    $readingScore = sanitizeInteger($_POST['reading']);
-    $writingScore = sanitizeInteger($_POST['writing']);
-    $groupID = $_POST['groupID'];
-    $scoreArray = [$groupID, $mathScore, $readingScore, $writingScore];
-
-    if (!arrayContainsNullValues($scoreArray)) {
-        createRecord($scoreArray);
-        $e = 'Record created successfully.';
+        if (!arrayContainsNullValues($scoreArray)) {
+            createRecord($scoreArray);
+            $e = 'Record created successfully.';
+        }
+        else {
+            $e = 'Error: Record not created.';
+        }
     }
     else {
-        $e = 'Invalid entry.';
+        $e = 'Error: Record not created.';
     }
+    echo $e;
 }
-else {
-    $e = 'Invalid entry';
+
+if (isset($_POST['insert'])) {
+    insert();
 }
 ?>

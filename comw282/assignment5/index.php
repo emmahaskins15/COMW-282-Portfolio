@@ -15,6 +15,7 @@ include 'functions.php';
         <form action="index.php" method="POST">
             Group:
             <select id="groupID" name="groupID">
+                <option value="null">-----</option>
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>
@@ -31,12 +32,8 @@ include 'functions.php';
             <label for="writing">Writing:</label>
             <input type="text" id="writing" name="writing">
             <br>
-            <input type="submit">
+            <input type="submit" name="insert">
         </form>
-        <?php
-            echo 'error: '.$e;
-            printDebug($e);
-        ?>
         <a href="scores.php">Scores</a>
     </div>
 </body>
