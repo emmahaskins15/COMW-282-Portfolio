@@ -11,7 +11,7 @@ include 'scoreFunctions.php';
 <body>
     <div class="container">
         <div class="subnav">
-            <form action="index.php" method="post">
+            <form action="scores.php" method="post">
                 Group:
                     <select id="groupID" name="groupID">
                         <option value="All">All</option>
@@ -29,6 +29,7 @@ include 'scoreFunctions.php';
                 echo 'Total Records: '.$count;
             ?>
         </div>
+        <a href="index.php">Index</a>
         <div>
             <table>
                 <thead>

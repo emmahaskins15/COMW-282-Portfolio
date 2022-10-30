@@ -37,5 +37,6 @@ include 'functions.php';
             echo 'error: '.$e;
             printDebug($e);
         ?>
+        <a href="scores.php">Scores</a>
     </div>
 </body>
