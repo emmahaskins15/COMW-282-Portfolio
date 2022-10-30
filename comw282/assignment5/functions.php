@@ -29,15 +29,43 @@ function validateGroupID($groupID) {
     }
 }
 
+function createRecord($scoreArray) {
+    require_once 'login.php';
+
+    try {
+        $dbh = new PDO($attr, $user, $pass, $opts);
+        $query = 'INSERT INTO test_scores (group_id, math, reading, writing) VALUES (?, ?, ?, ?)';
+        $sth = $dbh->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+        $sth->bindParam(1, $scoreArray[0], PDO::PARAM_STR, 1);
+        $sth->bindParam(2, $scoreArray[1], PDO::PARAM_INT);
+        $sth->bindParam(3, $scoreArray[2], PDO::PARAM_INT);
+        $sth->bindParam(4, $scoreArray[3], PDO::PARAM_INT);
+        $sth->execute([$scoreArray[0], $scoreArray[1], $scoreArray[2], $scoreArray[3]]);
+        $e = '`INSERT` success';
+
+    }
+    catch (PDOException $e) {
+        throw new PDOException($e->getMessage(), (int)$e->getCode());
+    }
+}
+
+function arrayContainsNullValues($array) {
+    foreach ($array as $value) {
+        if (is_null($value)) {
+            return true;
+            break;
+        }
+    }
+    return false;
+}
+
 function printDebug($arg) {
     echo '<pre>';
     print_r($arg);
     echo '</pre>';
 }
 
-require_once 'login.php';
 $e = '';
-
 
 if (isset($_POST['math']) && isset($_POST['reading']) && isset($_POST['writing']) && isset($_POST['groupID']) && validateGroupID($_POST['groupID'])) { 
     $mathScore = sanitizeInteger($_POST['math']);
@@ -45,17 +73,16 @@ if (isset($_POST['math']) && isset($_POST['reading']) && isset($_POST['writing']
     $writingScore = sanitizeInteger($_POST['writing']);
     $groupID = $_POST['groupID'];
     $scoreArray = [$groupID, $mathScore, $readingScore, $writingScore];
+
+    if (!arrayContainsNullValues($scoreArray)) {
+        createRecord($scoreArray);
+        $e = 'Record created successfully.';
+    }
+    else {
+        $e = 'Invalid entry.';
+    }
 }
 else {
     $e = 'Invalid entry';
 }
-
-echo '$_POST';
-printDebug($_POST);
-
-echo '$scoreArray';
-printDebug($scoreArray);
-
-
-
 ?>
