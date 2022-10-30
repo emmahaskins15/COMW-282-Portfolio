@@ -3,12 +3,24 @@ body {
     background-color: #f0f2f4;
 }
 
+.formContainer {
+    display: flex;
+    flex-direction: column;
+	margin-right: auto;
+	margin-left: auto;
+    width: fit-content;
+    padding: 1%;
+    border-radius: 6px;
+    border: solid 1px cornflowerblue;
+    background-color: aliceblue;
+}
+
 .container {
     display: flex;
     flex-direction: column;
 	margin-right: auto;
 	margin-left: auto;
-    width: 33%;
+    width: fit-content;
 }
 
 .subnav {
@@ -16,12 +28,34 @@ body {
 }
 
 table {
-    width: 100%;
     background: white;
     border-radius: 6px;
     border-collapse: collapse; 
-    border-spacing: 1;
+    border-spacing: 1px;
     margin: 2px;
+}
+
+.tableContainer {
+    height: 35rem;
+    width: fit-content;
+}
+
+.scrollTable {
+    overflow-y: scroll;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+.scrolltable > tbody {
+    overflow-y: scroll;
+    width: fit-content;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    align-self: center;
 }
 
 th {
@@ -29,8 +63,23 @@ th {
 	background: #0046be;
     color: white;
     font-size:large;
+    padding: 2px;
+    border: solid 1px white;
+    border-collapse: collapse;
 }
 
+th:first {
+    border-left: none;
+}
+
+th:last-child {
+    border-right: none;
+}
+
+th, td {
+    min-width: 200px;
+    padding: 6px;
+}
 tr {
     border: solid 1px #d8d8d8;
     border-right: 0px;
@@ -49,5 +98,4 @@ tr:hover {
 
 td {
     text-align: center;
-    padding: 6px;
 }

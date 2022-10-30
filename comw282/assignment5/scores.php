@@ -30,8 +30,8 @@ include 'scoreFunctions.php';
             ?>
         </div>
         <a href="index.php">Index</a>
-        <div>
-            <table>
+        <div class="tableContainer">
+            <table class="scrollTable">
                 <thead>
                     <tr>
                         <th>Record ID</th>

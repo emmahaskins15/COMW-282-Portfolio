@@ -10,8 +10,8 @@ include 'functions.php';
     <link href="css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <h3>Add a test score into the database:</h3>
     <div class="formContainer">
+    <h3>Add a test score into the database:</h3>    
         <form action="index.php" method="POST">
             Group:
             <select id="groupID" name="groupID">
@@ -24,13 +24,13 @@ include 'functions.php';
             </select>
             <br>
             <label for="math">Math:</label>
-            <input type="text" id="math" name="math">
+            <input type="number" id="math" name="math">
             <br>
             <label for="reading">Reading:</label>
-            <input type="text" id="reading" name="reading">
+            <input type="number" id="reading" name="reading">
             <br>
             <label for="writing">Writing:</label>
-            <input type="text" id="writing" name="writing">
+            <input type="number" id="writing" name="writing">
             <br>
             <input type="submit" name="insert">
         </form>
