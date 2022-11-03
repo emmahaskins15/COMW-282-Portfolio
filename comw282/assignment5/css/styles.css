@@ -13,6 +13,7 @@ body {
     border-radius: 6px;
     border: solid 1px cornflowerblue;
     background-color: aliceblue;
+    height: max-content;
 }
 
 .container {
@@ -100,6 +101,10 @@ td {
     text-align: center;
 }
 
+.row {
+    display: flex !important;
+}
+
 .col-25 {
     float: left;
     width: 25%;
@@ -107,7 +112,7 @@ td {
   }
 
   .col-75 {
-    float: left;
+    float: right;
     width: 75%;
     margin-top: 6px;
   }

@@ -79,7 +79,9 @@ function insert(){
     else {
         $e = 'Error: Record not created.';
     }
-    echo $e;
+    echo '<script type="text/javascript">
+       window.onload = function () { alert("'.$e.'"); } 
+        </script>';
 }
 
 if (isset($_POST['insert'])) {

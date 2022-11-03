@@ -59,7 +59,9 @@ include 'functions.php';
                 <br>
             </div>
             <div class="row">
-                <input type="submit" name="insert">
+                <div class="col-25">
+                    <input type="submit" name="insert">
+                </div>
             </div>
         </form>
         <a href="scores.php">Scores</a>
