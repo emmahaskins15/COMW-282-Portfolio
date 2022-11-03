@@ -38,7 +38,7 @@ function printDebug($arg) {
 function printGradesAsTableRows($result) {
     foreach ($result as $row){
         echo '<tr>';
-        echo '<td>'.htmlspecialchars($row['ID']);
+        echo '<td>'.htmlspecialchars($row['id']);
         echo '<td>'.htmlspecialchars($row['math']);
         echo '<td>'.htmlspecialchars($row['reading']);
         echo '<td>'.htmlspecialchars($row['writing']);

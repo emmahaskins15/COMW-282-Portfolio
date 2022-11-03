@@ -1,4 +1,9 @@
 <?php
+// TO-DO
+// -Convert filterInventory to use SQL commands
+// -Implement update function
+// -Implement delete function
+
 function printDebug($arg) {
     echo '<pre>';
     print_r($arg);
@@ -121,12 +126,23 @@ class Product {
     }
 }
 
+
+// Create SQL table for $inventory
 createInventoryTable();
-$manufacturer = $_POST['manufacturer'] ?? 'All';
+
+// Read $inventory from file
 $inventory = readInventory('phones.csv');
+
+// Insert $inventory into SQL table
+insertFromArray(filterInventory($inventory, 'All'));
+
+// Get $manufacturer from $_POST; set to 'All' if unset
+$manufacturer = $_POST['manufacturer'] ?? 'All';
+
+// Filter $inventory based on on $manufacturer
 $filteredInventory = filterInventory($inventory, $manufacturer);
-$allInventory = filterInventory($inventory, 'All');
-insertFromArray($allInventory);
+
+// insertFromArray($allInventory);
 
 
 
