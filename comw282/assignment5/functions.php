@@ -84,6 +84,9 @@ function insert(){
         </script>';
 }
 
+printDebug($_POST['insert']);
+
+
 if (isset($_POST['insert'])) {
     insert();
 }

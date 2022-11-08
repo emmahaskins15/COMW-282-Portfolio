@@ -31,7 +31,7 @@ include 'functions.php';
             </form>
         </div>
     </div>
-        <form action="phone.php" method="post">
+        <form action="phone.php" method="GET">
             <div class="product-table">
                 <table>
                     <thead>

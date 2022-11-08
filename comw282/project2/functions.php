@@ -31,25 +31,40 @@ function filterInventory($inventory, $manufacturer) {
     return $filteredInventory;
 }
 
-function printInventoryAsTableRows($parsedArray) {
-    foreach ($parsedArray as $k => $v) {
+function filterInventoryByQuery($manufacturer) {
+    $dbh = databaseConnector();
+    $manufacturer == 'All' ? $query = 'SELECT * FROM inventory' : $query = 'SELECT * FROM inventory WHERE manufacturer LIKE :manufacturer';
+    try {
+        // $query = 'SELECT * from inventory WHERE manufacturer LIKE :manufacturer';
+        $sth = $dbh->prepare($query);
+        $sth->bindParam(':manufacturer', $manufacturer, PDO::PARAM_STR);
+        $sth->execute();
+        $filteredInventory = $sth->fetchAll();
+        return $filteredInventory;
+    }
+    catch (PDOException $e) {
+        throw new PDOException($e->getMessage(), (int)$e->getCode());
+    }   
+
+}
+
+function printInventoryAsTableRows($filteredInventory) {
+    foreach ($filteredInventory as $row) {
         echo '<tr>';
-        echo '<td>'.$v[1].'</td>';
-        echo '<td>'.$v[0].'</td>';
-        echo '<td>$'.sprintf("%.2f", $v[2]).'</td>';
-        echo '<td><input type="radio" required="required" name="productID" id="'.$k.'" value="'.$k.'"></td>';
+        echo '<td>'.$row['manufacturer'].'</td>';
+        echo '<td>'.$row['model'].'</td>';
+        echo '<td>$'.sprintf("%.2f", $row['price']).'</td>';
+        echo '<td><input type="radio" required="required" name="id" id="'.$row['id'].'" value="'.$row['id'].'"></td>';
         echo '</tr>';
     }
 }
 
 function createInventoryTable() {
-    require 'login.php';
+    // require 'login.php';
+    $dbh = databaseConnector();
     try {
-        $dbh = new PDO($attr, $user, $pass, $opts);
-        $sth = $dbh->prepare('DESCRIBE inventory');
-
-        if (!$sth->execute()) {
-            $query = 'CREATE TABLE inventory (
+        // $dbh = new PDO($attr, $user, $pass, $opts);
+            $query = 'CREATE TABLE IF NOT EXISTS inventory (
                 id SMALLINT NOT NULL AUTO_INCREMENT,
                 manufacturer VARCHAR(32) NOT NULL,
                 model VARCHAR(32) NOT NULL,
@@ -58,7 +73,6 @@ function createInventoryTable() {
             )';
             $sth = $dbh->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
             $sth->execute();
-        }
     }
     catch (PDOException $e) {
         throw new PDOException($e->getMessage(), (int)$e->getCode());
@@ -66,8 +80,9 @@ function createInventoryTable() {
 }
 
 function insertFromArray($array) {
-    require 'login.php';
-    $dbh = new PDO($attr, $user, $pass, $opts);
+    // require 'login.php';
+    // $dbh = new PDO($attr, $user, $pass, $opts);
+    $dbh = databaseConnector();
 
     try {
         $query = 'INSERT INTO inventory (manufacturer, model, price) VALUES (:manufacturer, :model, :price)';
@@ -115,17 +130,76 @@ function databaseConnector() {
 }
 
 class Product {
-    public $ID, $manufacturer, $modelName, $price;
+    public $productID, $manufacturer, $model, $price;
 
-    function __construct($productID, $productAsArray)
+    function __construct($productAsArray)
     {
-        $this->ID = $productID;
-        $this->manufacturer = $productAsArray[1];
-        $this->modelName = $productAsArray[0];
-        $this->price = $productAsArray[2];
+        $this->id = $productAsArray['id'];
+        $this->manufacturer = $productAsArray['manufacturer'];
+        $this->model = $productAsArray['model'];
+        $this->price = $productAsArray['price'];
     }
 }
 
+function selectProductByID ($productID) {
+    $dbh = databaseConnector();
+    try {
+        $query = 'SELECT * FROM inventory WHERE id = :id';
+        $sth = $dbh->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+        $sth->bindParam('id', $productID, PDO::PARAM_INT);
+        $sth->execute();
+        $result = $sth->fetch();
+        return $result;
+    }
+    catch (PDOException $e) {
+        throw new PDOException($e->getMessage(), (int)$e->getCode());
+    }
+}
+
+function updateInventoryRecords($productID) {
+
+        $price = sanitizeFloat($_POST['price']);
+
+        // $price = validateFloat($_POST['price']);
+        $price = filter_var($_POST['price'], FILTER_VALIDATE_FLOAT);
+        $model = htmlspecialchars($_POST['model']);
+        $manufacturer = htmlspecialchars($_POST['manufacturer']);
+        $e = 'Record updated successfully.';
+        $dbh = databaseConnector();
+        try {
+            $query = 'UPDATE inventory SET manufacturer = :manufacturer, model = :model, price = :price WHERE id = :id';
+            $sth = $dbh->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+            $sth->bindParam('id', $productID, PDO::PARAM_INT);
+            $sth->bindParam('manufacturer', $manufacturer, PDO::PARAM_STR);
+            $sth->bindParam('model', $model, PDO::PARAM_STR);
+            $sth->bindParam('price', $price, PDO::PARAM_INT);
+            $sth->execute();
+        }
+        catch (PDOException $e) {
+            $e = new PDOException($e->getMessage(), (int)$e->getCode());
+        }
+    
+
+    echo '<script type="text/javascript">
+       window.onload = function () { alert("'.$e.'"); } 
+        </script>';
+}
+
+// Validate inputs
+function validateFloat($float) {
+    if (filter_var($float, FILTER_VALIDATE_FLOAT, array('options' => array('decimal' => 2, 'min_range' => 0))) === false) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+// Sanitize inputs
+function sanitizeFloat($float) {
+    validateFloat($float) ? $float = filter_var($float, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION ) : $float = null;
+    return $float;
+}
 
 // Create SQL table for $inventory
 createInventoryTable();
@@ -133,20 +207,22 @@ createInventoryTable();
 // Read $inventory from file
 $inventory = readInventory('phones.csv');
 
-// Insert $inventory into SQL table
-insertFromArray(filterInventory($inventory, 'All'));
+// Insert $inventory into SQL table, no logic for INSERT EXCEPT, so commented out unless needs to populate database
+// insertFromArray(filterInventory($inventory, 'All'));
 
 // Get $manufacturer from $_POST; set to 'All' if unset
 $manufacturer = $_POST['manufacturer'] ?? 'All';
 
-// Filter $inventory based on on $manufacturer
-$filteredInventory = filterInventory($inventory, $manufacturer);
-
-// insertFromArray($allInventory);
+// Deprecated: filter $inventory based on on $manufacturer with PHP
+// $filteredInventory = filterInventory($inventory, $manufacturer);
 
 
+// SQL query $inventory from inventory table matching $manufacturer (manufacturer column)
+$filteredInventory = filterInventoryByQuery($manufacturer);
 
-$productID = $_POST['productID'] ?? 1;
-$productAsArray = $filteredInventory[$productID];
-$productAsClass = new Product($productID, $productAsArray);
+if (isset($_GET['id'])) {
+    $productID = $_GET['id'];
+    $productAsArray = selectProductByID($productID);
+
+}
 ?>

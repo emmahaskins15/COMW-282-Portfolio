@@ -91,7 +91,7 @@ img:hover {
     transform: scale(98%);
 }
 
-button {
+.submit_button {
     border-radius: 12px;
     border: none;
     background-color: #0046be;
@@ -103,7 +103,7 @@ button {
     width: 33%;
 }
 
-button:hover {
+.submit_button:hover {
     background-color: #0046be9c;
 }
 
