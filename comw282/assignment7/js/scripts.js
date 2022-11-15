@@ -2,8 +2,7 @@ let scoreArray = [];
 function addScore() {
     scoreInput = document.getElementById("scoreInput").value;
     scoreArray.push(scoreInput);
-    alert(scoreInput + " added to scores.");
-    console.log(scoreArray)
+    alert("Score added: " + scoreInput);
 }
 
 function displayAvg(scoreArray){
