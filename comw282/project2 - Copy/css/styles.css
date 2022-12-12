@@ -1,0 +1,112 @@
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #f0f2f4;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+	margin-right: auto;
+	margin-left: auto;
+    width: 33%;
+}
+
+.subnav {
+    display: flex;
+    justify-content:space-between;
+}
+
+.subnav-col1 {
+    justify-content: flex-start ;
+    padding-left: 1%;    
+}
+.subnav-col2 {
+    justify-content: flex-end ;
+    padding-right: 1%;
+}
+
+.product-submit {
+    display: flex;
+    padding-right: 1%;
+    justify-content: flex-end;
+}
+
+.product-submit::after {
+    justify-self: end;
+}
+
+table {
+    width: 100%;
+    background: white;
+    border-radius: 6px;
+    border-collapse: collapse; 
+    border-spacing: 1;
+    margin: 2px;
+    overflow: hidden;
+}
+
+th {
+    text-align: center;
+	background: #0046be;
+    color: white;
+    font-size:large;
+}
+
+tr {
+    border: solid 1px #d8d8d8;
+    border-right: 0px;
+    border-left: 0px;
+    border-top: 0px;
+    transition: background-color 150ms ease-out;
+}
+
+tr:last-child {
+    border-bottom: 0px;
+}
+
+tr:hover {
+    background-color: rgb(216, 216, 216);
+}
+
+td {
+    text-align: center;
+
+    padding: 6px;
+}
+
+img {
+    align-self: center;
+    width: 40%;
+    border-radius: 6px;
+    border: 1px solid rgb(216, 216, 216);
+    transition: transform 150ms ease-out;
+
+}
+
+img:hover {
+    transform: scale(98%);
+}
+
+.submit_button {
+    border-radius: 12px;
+    border: none;
+    background-color: #0046be;
+    color: white;
+    transition: transform 150ms ease-out;
+    align-self: center;
+    display: inline-block;
+    margin: 2px;
+    width: 33%;
+}
+
+.submit_button:hover {
+    background-color: #0046be9c;
+}
+
+a {
+    font-size: smaller;
+}
