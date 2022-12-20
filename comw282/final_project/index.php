@@ -1,3 +1,16 @@
+<!--
+
+To-Do:
+Add volunteer stuff (Girls in STEM)
+Image assets for Projects
+Rounded rectangle backgrounds for Projects
+
+-->
+
+<?php
+include 'functions.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,19 +31,19 @@
               <div class="navbar-collapse collapse" id="navbar">
                 <ul class="navbar-nav me-auto mb-2">
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="index.html#resume">Resume</a>
+                    <a class="nav-link" aria-current="page" href="#resume">Resume</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="index.html#certifications">Certifications</a>
+                    <a class="nav-link" href="#certifications">Certifications</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="index.html#projects">Projects</a>
+                    <a class="nav-link" href="#projects">Projects</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="index.html#courses">Courses</a>
+                    <a class="nav-link" href="#courses">Courses</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="index.html#extracurricular">Extracurricular</a>
+                    <a class="nav-link" href="#extracurricular">Extracurricular</a>
                   </li>
                 </ul>
               </div>
@@ -171,10 +184,82 @@
                         </h4>
                         <p class="text-muted">A power events scheduler using .NET Core and WPF</p>
                     </div>
-                </div>
-                </div>
+
+                    <div class="d-flex flex-column gap-2">
+                <div id="proposal" class="d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4">
+                  </div>
+                        <h4>
+                        <a href="files/Emma_Haskins-CV.pdf">Technology Consultation</a>
+                        </h4>
+                        <p class="text-muted">A mock technology consultation for a retail POS solution</p>
+                    </div>
+
+              </div>
+            </div>
         </div>
         <!-- End projects -->
+
+        <!-- Start courses -->
+        <div id="courses" class="container px-4 py-5">
+            <h2 class="pb-2 border-bottom">Courses</h2>
+            <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+            </div>
+
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="filter">Filter</label>
+              <select class="form-select" id="filter" onchange="filter()">
+                <option selected value="all">All Courses</option>
+                <option value="1">Completed Courses</option>
+                <option value="0">Incomplete Courses</option>
+              </select>
+            </div>
+            <table class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Course Number</th>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Credit Hours</th>
+                        <th scope="col">Contact Hours</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Complete</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Start table drawing script -->
+                    <script type="text/javascript">
+                      let courses = <?php echo json_encode($courses); ?>;
+
+                      function filter() {
+                        const tbody = document.getElementById("tableBody");
+                        tbody.innerHTML = "";
+                        let selectFilter = document.getElementById("filter");
+                        let filterValue = selectFilter.options[selectFilter.selectedIndex].value;
+
+                        for (i = 0; i < courses.length; i++)  {
+                          if (filterValue == courses[i].completed || filterValue == "all"){
+                            let course = courses[i];
+                            let row = tbody.insertRow();
+
+                            for (key in course) {
+                              let text = document.createTextNode(course[key]);
+                              if (key == 'completed') {
+                                course[key] == 1 ? text = document.createTextNode('✔') : text = document.createTextNode('❌');
+                              }
+                              let cell = row.insertCell();
+                              cell.appendChild(text);
+                            }   
+                          }
+                        }
+                      }
+                    </script>
+                    <!-- End table drawing script -->
+                    <?php
+                    printCoursesAsTableRows($courses)
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <!-- End courses -->
       </main>
 </body>
 </html>
