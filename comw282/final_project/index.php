@@ -175,9 +175,9 @@ include 'functions.php';
                 <div class="d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4">
                     </div>
                         <h4>
-                        <a href="https://github.com/emmahaskins15/Windows-Form-Pokedex">Windows Forms Pokedex</a>
+                        <a href="https://github.com/emmahaskins15/Windows-Form-Pokedex">SQL C# Pokédex</a>
                         </h4>
-                        <p class="text-muted">A C# Pokedex using Windows Forms</p>
+                        <p class="text-muted">A C# Pokedex using .NET Forms</p>
                     </div>
 
                 <div class="d-flex flex-column gap-2">
@@ -202,7 +202,7 @@ include 'functions.php';
                 <div id="pokedex" class="d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4">
                   </div>
                         <h4>
-                        <a href="https://github.com/emmahaskins15/RESTful-CSharp-Pokedex">Pokédex</a>
+                        <a href="https://github.com/emmahaskins15/RESTful-CSharp-Pokedex">RESTful C# Pokédex</a>
                         </h4>
                         <p class="text-muted">A Pokédex that interfaces with RESTful PokéAPI written in C# using .NET Forms.</p>
                     </div>
