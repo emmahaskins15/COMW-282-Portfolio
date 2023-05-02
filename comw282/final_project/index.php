@@ -79,6 +79,10 @@ include 'functions.php';
             <article class="blog-post">
               <h2 class="blog-post-title mb-1">Professional Experience</h2>      
               <ul>
+              <li>12.2022 - Present<br> 
+                    Technology Associate<br>
+                    Clonlara School, Ypsilanti, MI USA
+                </li>
                 <li>05.2018 - 07.2022<br> 
                     IT Coordinator<br>
                     Xhelili Realty, Leipzig Germany
@@ -96,7 +100,7 @@ include 'functions.php';
               <hr>
               <h2 class="blog-post-title mb-1">Academic Experience</h2>      
               <ul>
-                <li>09.2022 - Current<br> 
+                <li>09.2021 - Current<br> 
                     AAS Computer Information Systems<br>
                     Mott Community College, Flint, MI USA
                 </li>
@@ -189,11 +193,19 @@ include 'functions.php';
                 <div id="proposal" class="d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4">
                   </div>
                         <h4>
-                        <a href="files/Emma_Haskins-CV.pdf">Technology Consultation</a>
+                        <a href="files/Final_Project-COMI-169.pdf">Technology Consultation</a>
                         </h4>
                         <p class="text-muted">A mock technology consultation for a retail POS solution</p>
                     </div>
 
+                    <div class="d-flex flex-column gap-2">
+                <div id="pokedex" class="d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4">
+                  </div>
+                        <h4>
+                        <a href="https://github.com/emmahaskins15/RESTful-CSharp-Pokedex">Pokédex</a>
+                        </h4>
+                        <p class="text-muted">A Pokédex that interfaces with RESTful PokéAPI written in C# using .NET Forms.</p>
+                    </div>
               </div>
             </div>
         </div>
